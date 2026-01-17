@@ -9,15 +9,18 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const handleLognin = async (e: React.FormEvent) => {
+    // Function to handle user login
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
 
+        // Sign in the user with Supabase
         const { error } = await supabaseClient.auth.signInWithPassword({
             email,
             password,
         });
 
+        // Handle potential errors OR navigate on success
         if (error) {
             setError(error.message);
         } else {
@@ -28,7 +31,7 @@ export default function Login() {
     return (
         <div className="flex flex-col items-center justify-center gap-6 min-h-screen bg-indigo-100">
                 <h2 className="font-bold text-4xl">Welcome back!</h2>
-                <form className="w-2/3 h-full flex flex-col gap-4" onSubmit={handleLognin}>
+                <form className="w-2/3 h-full flex flex-col gap-4" onSubmit={handleLogin}>
                     <input
                         type="email"
                         placeholder="example@example.com"

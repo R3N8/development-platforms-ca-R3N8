@@ -35,9 +35,9 @@ export default function Navbar() {
           <div className="flex justify-between h-16 items-center">
             {/* Left side */}
             <div className="hidden md:flex items-center gap-4">
-              <Link to="/" className="font-semibold text-lg">Home</Link>
+              <Link to="/" className="text-zinc-900 font-semibold text-lg hover:scale-105 transition-transform">Home</Link>
               {user && (
-                <Link to="/create" className="font-semibold text-lg">Create New</Link>
+                <Link to="/create" className="text-zinc-900 font-semibold text-lg hover:scale-105 transition-transform">Create New</Link>
               )}
             </div>
 
@@ -46,7 +46,7 @@ export default function Navbar() {
               {user ? (
                 <button 
                   onClick={logout} 
-                  className="bg-indigo-900 rounded-md p-2 font-semibold text-indigo-50 hover:scale-105 transition-transform"
+                  className="font-semibold text-lg text-indigo-900 cursor-pointer hover:scale-105 transition-transform"
                 >
                   Logout <i className="fa-solid fa-arrow-right-from-bracket"></i>
                 </button>
@@ -82,14 +82,14 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {isOpen && (
-          <div className="md:hidden px-4 pt-2 pb-4 flex flex-col gap-2 bg-indigo-100">
+          <div className="md:hidden px-4 pt-2 pb-4 flex flex-col items-start gap-2 bg-indigo-100">
             {user ? (
               <>
                 <Link to="/" className="font-semibold text-md text-zinc-900 hover:text-indigo-500">Home</Link>
                 <Link to="/create" className="font-semibold text-md text-zinc-900 hover:text-indigo-500">Create New</Link>
                 <button 
                   onClick={logout} 
-                  className="font-semibold text-md text-zinc-900 hover:text-indigo-500"
+                  className="font-semibold text-md text-zinc-900 hover:text-indigo-500 cursor-pointer"
                 >
                   Logout <i className="fa-solid fa-arrow-right-from-bracket"></i>
                 </button>
