@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react"; 
 import { supabaseClient } from "../supabaseClient";
+import { useAlert } from "../hooks/useAlert";
+
 import type { User } from "@supabase/supabase-js";
 
 export default function Navbar() {
     // State to manage mobile menu visibility
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState<User | null>(null)
+    const { showAlert } = useAlert();
+    const navigate = useNavigate();
 
     // Effect to handle user session and auth state changes
     useEffect(() => {
@@ -26,6 +30,8 @@ export default function Navbar() {
 
       // Clear user state
       setUser(null)
+      showAlert("success", "Logged out successfully");
+      navigate("/");
     }
     
     // Navbar container

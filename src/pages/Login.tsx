@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabaseClient } from "../supabaseClient";
+import { useAlert } from "../hooks/useAlert";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-
+    
+    const { showAlert } = useAlert();
     const navigate = useNavigate();
 
     // Function to handle user login
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError("");
 
         // Sign in the user with Supabase
         const { error } = await supabaseClient.auth.signInWithPassword({
@@ -22,8 +22,9 @@ export default function Login() {
 
         // Handle potential errors OR navigate on success
         if (error) {
-            setError(error.message);
+            showAlert("error", error.message);
         } else {
+            showAlert("success", "Login successful!");
             navigate("/");
         }
     };
@@ -50,7 +51,6 @@ export default function Login() {
                     />
                     <button className="p-2 bg-indigo-500 tracking-wider text-zinc-50 font-semibold rounded-md hover:bg-indigo-600 cursor-pointer" type="submit">Login</button>
                 </form>
-            {error && <p className="error-message">{error}</p>}
         </div>
     )
 }

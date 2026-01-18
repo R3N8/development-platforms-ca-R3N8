@@ -3,19 +3,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabaseClient } from '../supabaseClient'
+import { useAlert } from '../hooks/useAlert'
 
 export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
 
+  const { showAlert } = useAlert()
   const navigate = useNavigate()
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError('')
-    setMessage('')
 
     const { data, error } = await supabaseClient.auth.signUp({
       email,
@@ -23,7 +21,7 @@ export default function Register() {
     })
 
     if (error) {
-      setError(error.message)
+      showAlert('error', `Registration error: ${error.message}`)
       return
     }
 
@@ -32,7 +30,7 @@ export default function Register() {
      * data.session === null
      */
     if (!data.session) {
-      setMessage('Check your email to confirm your account')
+      showAlert('success', 'Registration successful! Please check your email to confirm your account.')
       return
     }
 
@@ -41,6 +39,7 @@ export default function Register() {
      * User is logged in immediately
      */
     navigate('/')
+    showAlert('success', 'Registration successful! You are now logged in.')
   }
 
   return (
@@ -69,9 +68,6 @@ export default function Register() {
         <button type="submit" className="p-2 bg-indigo-500 tracking-wider text-zinc-50 font-semibold rounded-md hover:bg-indigo-600 cursor-pointer">
           Sign Up
         </button>
-
-        {error && <p className="text-red-500">{error}</p>}
-        {message && <p className="text-green-600">{message}</p>}
       </form>
     </div>
   )

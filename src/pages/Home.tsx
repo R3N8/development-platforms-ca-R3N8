@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { supabaseClient } from "../supabaseClient";
 import ArticleCard from "../components/Card";
-import type { Article } from "../types/index.ts";
+import type { Article } from "../types";
+import { useAlert } from "../hooks/useAlert";
 
 export default function Home() {
     // State to hold articles, loading status, and error message
     const [articles, setArticles] = useState<Article[]>([])
-    const [error, setError] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(true)
+
+    const { showAlert } = useAlert()
 
     useEffect(() => {
         // Function to fetch articles
@@ -15,9 +17,6 @@ export default function Home() {
 
         // Fetch articles ordered by creation date descending
         setLoading(true)
-
-        // reset error state
-        setError('')
 
         // Fetch articles ordered by creation date descending
         const { data, error } = await supabaseClient
@@ -27,7 +26,7 @@ export default function Home() {
 
         if (error) {
             // if Supabase returns an error, set the error state
-            setError(error.message)
+            showAlert('error', `Error fetching articles: ${error.message}`)
         } else {
             // otherwise, update the articles state with fetched data
             setArticles(data ?? [])
@@ -39,7 +38,7 @@ export default function Home() {
 
         // Call the fetchArticles function
         fetchArticles()
-    }, [])
+    }, [showAlert]);
 
     return (
         <section className="max-w-full mx-auto p-2 md:p-4 min-h-screen bg-indigo-100">
@@ -50,18 +49,8 @@ export default function Home() {
                     <p className="text-gray-500">Loading articles...</p>
                 )}
 
-                {/* Display error message if any */}
-                {error && (
-                    <p className="text-red-500 mb-4">{error}</p>
-                )}
-
-                {/* Display message if no articles are found */}
-                {!loading && !error && articles.length === 0 && (
-                    <p className="text-gray-500">No articles yet.</p>
-                )}
-
                 {/* Render ArticleCard components for each article */}
-                {!loading && !error && articles.map(article => (
+                {articles.map(article => (
                     <ArticleCard key={article.id} article={article} />
                 ))}
             </div>
