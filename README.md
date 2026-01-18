@@ -15,16 +15,18 @@ Install dependencies
 npm install
 ```
 
-## Environment variables
+Environment variables
 
 ```bash
 VITE_SUPABASE_URL=""
 VITE_SUPABASE_ANON_KEY=""
 ```
 
-## Run the project
+Run the project
 
+```bash
 npm run dev
+```
 
 ## Access the app
 
