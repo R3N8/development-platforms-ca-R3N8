@@ -43,11 +43,6 @@ export default function Home() {
 
     return (
         <section className="max-w-full mx-auto p-2 md:p-4 min-h-screen bg-indigo-100">
-            {/* Header */}
-            <div>
-                <h1 className="text-2xl font-bold mb-4">Articles: </h1>
-            </div>
-
             {/* Article grid container */}
             <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4 xxl:grid-cols-4 lg:gap-6">
                 {/* Display loading message */}
