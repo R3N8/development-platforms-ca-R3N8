@@ -1,7 +1,7 @@
-import type { Props } from "../types/index.ts";
+import type { CreateNewProps } from "../types/index.ts";
 
 // Card component to display article information
-export default function ArticleCard({ article }: Props) {
+export default function ArticleCard({ article }: CreateNewProps) {
     return (
         <div className="flex flex-col h-full bg-indigo-50 leading-normal rounded-md p-4 shadow-md hover:scale-105 transition-transform">
             <h2 className="p-1.5 text-xl font-semibold text-zinc-900 line-clamp-1">{article.title}</h2>
