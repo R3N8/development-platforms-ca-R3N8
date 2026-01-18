@@ -28,7 +28,7 @@ npm run dev
 
 ## Access the app
 
-Netlify: (View Project)[]
+Netlify: [View Project](https://dvpca.netlify.app/)
 
 ## Motivation
 
