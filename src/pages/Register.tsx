@@ -1,5 +1,3 @@
-// src/pages/Register.tsx
-
 import { useState } from 'react';
 import { supabaseClient } from '../supabaseClient';
 import { useAlert } from '../hooks/useAlert';
@@ -16,6 +14,10 @@ export default function Register() {
     const { data, error } = await supabaseClient.auth.signUp({
       email,
       password,
+      options: {
+        // 
+        emailRedirectTo: `${window.location.origin}/callback`,
+      }
     });
 
     if (error) {
@@ -23,9 +25,7 @@ export default function Register() {
       return;
     }
 
-    /**
-     * Email confirmation ON
-     */
+    //Email confirmation ON
     if (!data.session) {
       showAlert('info', 'Registration successful! Please check your email to confirm your account.');
       return;
