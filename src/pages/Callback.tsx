@@ -3,14 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { supabaseClient } from '../supabaseClient';
 import { useAlert } from '../hooks/useAlert';
 
+
+// https://temp-mail.org/
+
 export default function Callback() {
     const { showAlert } = useAlert();
     const navigate = useNavigate();
   
     useEffect(() => {
         const finishAuth = async () => {
-            const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
-                (event, session) => {
+            await supabaseClient.auth.onAuthStateChange(
+                (event) => {
                     if (event === 'SIGNED_IN') {
                     // Redirect to a protected route after successful sign-in
                     console.log("event should trigger redirect SIGNIN", event)
