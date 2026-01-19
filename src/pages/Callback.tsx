@@ -9,6 +9,19 @@ export default function Callback() {
   
     useEffect(() => {
         const finishAuth = async () => {
+            const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
+                (event, session) => {
+                    if (event === 'SIGNED_IN') {
+                    // Redirect to a protected route after successful sign-in
+                    console.log("event should trigger redirect SIGNIN", event)
+                    
+                    } else if (event === 'SIGNED_OUT') {
+                    // Optional: redirect to login if signed out
+                    console.log("event should trigger redirect SIGNINOUT", event)
+                    }
+                }
+            );
+
             const { data } = await supabaseClient.auth.getSession();
 
             if (data.session) {
@@ -31,3 +44,4 @@ export default function Callback() {
         </div>
     );
 }
+
