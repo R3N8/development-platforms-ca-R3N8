@@ -1,45 +1,35 @@
 // src/pages/Register.tsx
 
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { supabaseClient } from '../supabaseClient'
-import { useAlert } from '../hooks/useAlert'
+import { useState } from 'react';
+import { supabaseClient } from '../supabaseClient';
+import { useAlert } from '../hooks/useAlert';
 
 export default function Register() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const { showAlert } = useAlert()
-  const navigate = useNavigate()
+  const { showAlert } = useAlert();
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const { data, error } = await supabaseClient.auth.signUp({
       email,
       password,
-    })
+    });
 
     if (error) {
-      showAlert('error', `Registration error: ${error.message}`)
-      return
+      showAlert('error', `Registration error: ${error.message}`);
+      return;
     }
 
     /**
-     * CASE 1: Email confirmation ON (default)
-     * data.session === null
+     * Email confirmation ON
      */
     if (!data.session) {
-      showAlert('success', 'Registration successful! Please check your email to confirm your account.')
-      return
+      showAlert('info', 'Registration successful! Please check your email to confirm your account.');
+      return;
     }
-
-    /**
-     * CASE 2: Email confirmation OFF
-     * User is logged in immediately
-     */
-    navigate('/')
-    showAlert('success', 'Registration successful! You are now logged in.')
   }
 
   return (
@@ -70,5 +60,5 @@ export default function Register() {
         </button>
       </form>
     </div>
-  )
+  );
 }

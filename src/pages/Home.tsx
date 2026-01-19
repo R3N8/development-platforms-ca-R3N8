@@ -6,17 +6,17 @@ import { useAlert } from "../hooks/useAlert";
 
 export default function Home() {
     // State to hold articles, loading status, and error message
-    const [articles, setArticles] = useState<Article[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    const { showAlert } = useAlert()
+    const { showAlert } = useAlert();
 
     useEffect(() => {
         // Function to fetch articles
         const fetchArticles = async () => {
 
         // Fetch articles ordered by creation date descending
-        setLoading(true)
+        setLoading(true);
 
         // Fetch articles ordered by creation date descending
         const { data, error } = await supabaseClient
@@ -26,18 +26,18 @@ export default function Home() {
 
         if (error) {
             // if Supabase returns an error, set the error state
-            showAlert('error', `Error fetching articles: ${error.message}`)
+            showAlert('error', `Error fetching articles: ${error.message}`);
         } else {
             // otherwise, update the articles state with fetched data
-            setArticles(data ?? [])
+            setArticles(data ?? []);
         }
 
         // finally, set loading to false
-        setLoading(false)
+        setLoading(false);
         }
 
         // Call the fetchArticles function
-        fetchArticles()
+        fetchArticles();
     }, [showAlert]);
 
     return (
@@ -55,5 +55,5 @@ export default function Home() {
                 ))}
             </div>
         </section>
-    )
+    );
 }

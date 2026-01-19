@@ -52,5 +52,5 @@ export default function Login() {
                     <button className="p-2 bg-indigo-500 tracking-wider text-zinc-50 font-semibold rounded-md hover:bg-indigo-600 cursor-pointer" type="submit">Login</button>
                 </form>
         </div>
-    )
+    );
 }
